@@ -20,14 +20,14 @@ export default function Header() {
         <div className="logo">
           <Link href="/" onClick={closeMenu}>
             {/* Logo Image */}
-            <Image
+            {/* <Image
               src="/images/logo5.jpg"
               alt="MERHAVA PROPERTIES & DEVELOPMENT"
               width={180}
               height={150}
               className="logo-image"
               priority
-            />
+            /> */}MERHAVA PROPERTIES & DEVELOPMENT
           </Link>
         </div>
 
