@@ -78,7 +78,7 @@ export default function About() {
         <div className="container">
           <div className="story-content">
             <div className="story-text">
-              <h2 style={{ textAlign: 'center'}}>Our Story</h2>
+              <h2 className="section-title">Our Story</h2>
               <p>
                 Merhava Properties & Development is a dynamic real estate
                 company based in Kano, Nigeria, committed to redefining the
@@ -93,7 +93,7 @@ export default function About() {
               </p>
               <p>
                 At Merhava, we believe real estate is more than land and
-                buildings — it’s about creating assets that empower lives,
+                buildings — it's about creating assets that empower lives,
                 communities, and future generations.
               </p>
             </div>
@@ -118,12 +118,12 @@ export default function About() {
       {/* Values Section */}
       <section className="values-section">
         <div className="container">
-          <h2 style={{ textAlign: 'center'}}>Our Values</h2>
+          <h2 className="section-title">Our Values</h2>
           <div className="values-grid">
             <div className="value-card">
               <h3>Vision</h3>
               <p>
-                To become one of Africa’s leading real estate investment and
+                To become one of Africa's leading real estate investment and
                 development companies — building innovative projects that
                 inspire modern living, financial growth, and sustainable
                 communities.
@@ -145,7 +145,7 @@ export default function About() {
       {/* Core Services Section */}
       <section className="service-section">
         <div className="container">
-          <h2 style={{ textAlign: 'center'}}>Our Core Services</h2>
+          <h2 className="section-title">Our Core Services</h2>
           <div className="service-grid">
             <div className="service-card">
               <h3>Real Estate Investment & Development</h3>
@@ -199,7 +199,7 @@ export default function About() {
       {/* Team Section */}
       <section className="team-section">
         <div className="container">
-          <h2 style={{ textAlign: 'center'}}>Meet Our Team</h2>
+          <h2 className="section-title">Meet Our Team</h2>
           <div className="team-grid">
             {teamMembers.map((member) => (
               <TeamMemberCard key={member.id} member={member} />
