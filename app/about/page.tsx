@@ -42,11 +42,11 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: 5,
-    name: "Naseeb Yusif",
+    name: "Muhammad Nasib Yusif",
     position: "CSO",
     image: "/images/team/dev-manager.jpg",
     bio: "David oversees all development projects with meticulous attention to quality and timelines.",
-    email: "david@merhavaproperties.com",
+    email: "Naseebyusuftiger@gmail.com",
     phone: "+234-816-868-8389",
   },
   {
