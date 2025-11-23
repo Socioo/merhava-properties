@@ -6,9 +6,9 @@ import { Property } from "../types";
 const featuredProperties: Property[] = [
   {
     id: 1,
-    title: "Luxury Villa in Karen",
+    title: "Luxury Villa in Abuja",
     price: "₦1,200,000",
-    location: "Karen, Nairobi",
+    location: "Abuja, Kano",
     bedrooms: 4,
     bathrooms: 3,
     sqft: 3200,
@@ -20,9 +20,9 @@ const featuredProperties: Property[] = [
   },
   {
     id: 2,
-    title: "Prime 1-Acre Plot in Kitengela",
+    title: "Prime 1-Acre Plot in Kano",
     price: "₦150,000",
-    location: "Kitengela, Kajiado",
+    location: "Kano, Kajiado",
     sqft: 43560,
     image: "/images/properties/land-1.jpg",
     type: "sale",
@@ -39,9 +39,9 @@ const featuredProperties: Property[] = [
   },
   {
     id: 3,
-    title: "Modern Apartment in Westlands",
+    title: "Modern Apartment in Lagos",
     price: "₦450,000",
-    location: "Westlands, Nairobi",
+    location: "Lagos, Kano",
     bedrooms: 3,
     bathrooms: 2,
     sqft: 1800,
@@ -53,9 +53,9 @@ const featuredProperties: Property[] = [
   },
   {
     id: 4,
-    title: "Commercial Plot in Thika",
+    title: "Commercial Plot in Kano",
     price: "₦300,000",
-    location: "Thika, Kiambu",
+    location: "Kano, Kiambu",
     sqft: 10000,
     image: "/images/properties/land-2.jpg",
     type: "sale",
@@ -137,12 +137,12 @@ export default function Home() {
             <h2>Our Commitment</h2>
             <div className="commitment-text">
               <p className="commitment-lead">
-                At Merhava Properties & Development, our commitment is to excellence, 
-                transparency, and innovation.
+                At Merhava Properties & Development, our commitment is to
+                excellence, transparency, and innovation.
               </p>
               <p className="commitment-detail">
-                We aim to create developments that reflect our values — quality, 
-                trust, and growth — ensuring every project adds lasting value to 
+                We aim to create developments that reflect our values — quality,
+                trust, and growth — ensuring every project adds lasting value to
                 our clients, partners, and communities.
               </p>
             </div>
@@ -178,7 +178,7 @@ export default function Home() {
             </div>
             <div className="feature">
               <h3>50+ Projects</h3>
-              <p>Successful developments across Kenya</p>
+              <p>Successful developments across Nigeria</p>
             </div>
             <div className="feature">
               <h3>Premium Lands</h3>

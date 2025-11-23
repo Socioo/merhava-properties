@@ -69,7 +69,6 @@ body {
   z-index: 1001;
 }
 
-
 /* Hero Sections */
 .hero-section {
   position: relative;
@@ -181,20 +180,20 @@ body {
     height: 80vh;
     min-height: 500px;
   }
-  
+
   .hero-content h1 {
     font-size: 2.5rem;
   }
-  
+
   .hero-content p {
     font-size: 1.1rem;
   }
-  
+
   .hero-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .cta-button {
     padding: 0.875rem 2rem;
     font-size: 1rem;
@@ -205,7 +204,7 @@ body {
   .hero-content h1 {
     font-size: 2rem;
   }
-  
+
   .hero-content p {
     font-size: 1rem;
   }
@@ -307,15 +306,15 @@ body {
   .commitment-section {
     padding: 3rem 0;
   }
-  
+
   .commitment-section h2 {
     font-size: 2rem;
   }
-  
+
   .commitment-lead {
     font-size: 1.2rem;
   }
-  
+
   .commitment-detail {
     font-size: 1rem;
   }
@@ -325,7 +324,7 @@ body {
   .commitment-section h2 {
     font-size: 1.8rem;
   }
-  
+
   .commitment-lead {
     font-size: 1.1rem;
   }
@@ -1295,6 +1294,7 @@ body {
 }
 
 .footer-bottom {
+  font-size: 11px;
   border-top: 1px solid #34495e;
   padding-top: 1rem;
   text-align: center;

@@ -1,28 +1,38 @@
-'use client';
-import { useState } from 'react';
-import { ContactFormData } from '../../types';
+"use client";
+import { useState } from "react";
+import { ContactFormData } from "../../types";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-    propertyInterest: ''
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+    propertyInterest: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your inquiry! We will contact you soon.');
-    setFormData({ name: '', email: '', phone: '', message: '', propertyInterest: '' });
+    console.log("Form submitted:", formData);
+    alert("Thank you for your inquiry! We will contact you soon.");
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+      propertyInterest: "",
+    });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -73,11 +83,19 @@ export default function ContactForm() {
           onChange={handleChange}
         >
           <option value="">Select a property</option>
-          <option value="Luxury Villa in Karen">Luxury Villa in Karen</option>
-          <option value="Modern Apartment in Westlands">Modern Apartment in Westlands</option>
-          <option value="Prime 1-Acre Plot in Kitengela">Prime 1-Acre Plot in Kitengela</option>
-          <option value="5-Acre Agricultural Land in Machakos">5-Acre Agricultural Land in Machakos</option>
-          <option value="Commercial Plot in Thika">Commercial Plot in Thika</option>
+          <option value="Luxury Villa in Abuja">Luxury Villa in Abuja</option>
+          <option value="Modern Apartment in Lagos">
+            Modern Apartment in Lagos
+          </option>
+          <option value="Prime 1-Acre Plot in Kano">
+            Prime 1-Acre Plot in Kano
+          </option>
+          <option value="5-Acre Agricultural Land in Machakos">
+            5-Acre Agricultural Land in Machakos
+          </option>
+          <option value="Commercial Plot in Kano">
+            Commercial Plot in Kano
+          </option>
           <option value="Beach Plot in Diani">Beach Plot in Diani</option>
           <option value="Other">Other Property</option>
         </select>
@@ -95,7 +113,9 @@ export default function ContactForm() {
         ></textarea>
       </div>
 
-      <button type="submit" className="submit-btn">Send Inquiry</button>
+      <button type="submit" className="submit-btn">
+        Send Inquiry
+      </button>
     </form>
   );
 }
