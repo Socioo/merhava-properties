@@ -342,6 +342,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-top: 20px;
 }
 
 .story-text {
@@ -1482,7 +1483,6 @@ body {
 .stat {
   text-align: center;
   padding: 1rem;
-  margin-top: 20px;
 }
 
 .count {
