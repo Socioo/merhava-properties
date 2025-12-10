@@ -1,274 +1,15 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PropertyCard from "../components/PropertyCard";
 import FilterBar from "../components/FilterBar";
 import { Property } from "../../types";
-
-const allProperties: Property[] = [
-  // ===== PROPERTIES FOR SALE/RENT =====
-  // Residential Properties - Sale
-  {
-    id: 1,
-    title: "Luxury Villa in Abuja",
-    price: "₦1,200,000",
-    location: "Abuja, Kano",
-    bedrooms: 4,
-    bathrooms: 3,
-    sqft: 3200,
-    image: "/images/properties/villa-1.jpg",
-    type: "sale",
-    category: "residential",
-    status: "available",
-    features: ["Swimming Pool", "Garden", "Security", "Parking"],
-  },
-  {
-    id: 2,
-    title: "Modern Apartment in Lagos",
-    price: "₦450,000",
-    location: "Lagos, Kano",
-    bedrooms: 3,
-    bathrooms: 2,
-    sqft: 1800,
-    image: "/images/properties/house-1.jpg",
-    type: "sale",
-    category: "residential",
-    status: "available",
-    features: ["Balcony", "Gym", "Security", "Parking"],
-  },
-  {
-    id: 3,
-    title: "Family Home in Kaduna",
-    price: "₦850,000",
-    location: "Kaduna, Kano",
-    bedrooms: 5,
-    bathrooms: 4,
-    sqft: 4200,
-    image: "/images/properties/house-2.jpg",
-    type: "sale",
-    category: "residential",
-    status: "available",
-    features: ["Maid Quarter", "Garden", "Security", "Double Garage"],
-  },
-
-  // Residential Properties - Rent
-  {
-    id: 4,
-    title: "Executive Townhouse for Rent",
-    price: "₦2,500/month",
-    location: "Kilimani, Kano",
-    bedrooms: 3,
-    bathrooms: 2.5,
-    sqft: 2200,
-    image: "/images/properties/house-1.jpg",
-    type: "rent",
-    category: "residential",
-    status: "available",
-    features: ["Furnished", "Parking", "Security", "Garden"],
-  },
-  {
-    id: 5,
-    title: "Garden Apartment in Lavington",
-    price: "₦1,200/month",
-    location: "Lavington, Kano",
-    bedrooms: 2,
-    bathrooms: 2,
-    sqft: 1500,
-    image: "/images/properties/house-2.jpg",
-    type: "rent",
-    category: "residential",
-    status: "available",
-    features: ["Garden", "Parking", "Security", "Balcony"],
-  },
-
-  // Commercial Properties
-  {
-    id: 6,
-    title: "Commercial Space in CBD",
-    price: "₦800,000",
-    location: "Kano CBD",
-    sqft: 5000,
-    image: "/images/properties/house-1.jpg",
-    type: "sale",
-    category: "commercial",
-    status: "available",
-    features: ["Prime Location", "Parking", "Security", "Elevator"],
-  },
-  {
-    id: 7,
-    title: "Office Space in Lagos",
-    price: "₦4,500/month",
-    location: "Lagos, Kano",
-    sqft: 3000,
-    image: "/images/properties/house-3.jpg",
-    type: "rent",
-    category: "commercial",
-    status: "available",
-    features: ["Fully Furnished", "Parking", "Meeting Rooms", "Reception"],
-  },
-
-  // ===== LAND FOR SALE =====
-  // Residential Land
-  {
-    id: 8,
-    title: "Prime 1-Acre Plot in Kano",
-    price: "₦150,000",
-    location: "Kano, Kajiado",
-    sqft: 43560,
-    image: "/images/properties/land-1.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Title Deed", "Fenced", "Access Road", "Water Available"],
-    landDetails: {
-      plotSize: "1 Acre",
-      zoning: "Residential",
-      topography: "Flat",
-      accessRoad: true,
-      utilities: ["Water", "Electricity Nearby"],
-    },
-  },
-  {
-    id: 9,
-    title: "Suburban Plot in Kaduna",
-    price: "₦250,000",
-    location: "Kaduna, Kano",
-    sqft: 10000,
-    image: "/images/properties/land-2.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Prime Location", "Gated Community", "All Utilities"],
-    landDetails: {
-      plotSize: "0.23 Acres",
-      zoning: "Residential",
-      topography: "Flat",
-      accessRoad: true,
-      utilities: ["Water", "Electricity", "Internet", "Sewer"],
-    },
-  },
-  {
-    id: 10,
-    title: "Half-Acre Plot in Kiserian",
-    price: "₦80,000",
-    location: "Kiserian, Kajiado",
-    sqft: 21780,
-    image: "/images/properties/land-1.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Scenic Views", "Quiet Neighborhood", "Good Access"],
-    landDetails: {
-      plotSize: "0.5 Acres",
-      zoning: "Residential",
-      topography: "Gentle Slope",
-      accessRoad: true,
-      utilities: ["Water Available", "Electricity Planned"],
-    },
-  },
-
-  // Commercial Land
-  {
-    id: 11,
-    title: "Commercial Plot in Kano",
-    price: "₦300,000",
-    location: "Kano, Kiambu",
-    sqft: 10000,
-    image: "/images/properties/land-2.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Commercial Zoning", "Highway Frontage", "Title Deed"],
-    landDetails: {
-      plotSize: "0.23 Acres",
-      zoning: "Commercial",
-      topography: "Flat",
-      accessRoad: true,
-      utilities: ["Water", "Electricity", "Sewer"],
-    },
-  },
-  {
-    id: 12,
-    title: "Industrial Plot in Athi River",
-    price: "₦180,000",
-    location: "Athi River, Machakos",
-    sqft: 25000,
-    image: "/images/properties/land-2.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Industrial Zoning", "Near Export Zone", "Rail Siding"],
-    landDetails: {
-      plotSize: "0.57 Acres",
-      zoning: "Industrial",
-      topography: "Flat",
-      accessRoad: true,
-      utilities: ["Water", "Three-Phase Power", "Sewer"],
-    },
-  },
-
-  // Agricultural & Special Land
-  {
-    id: 13,
-    title: "5-Acre Agricultural Land in Machakos",
-    price: "₦75,000",
-    location: "Machakos County",
-    sqft: 217800,
-    image: "/images/properties/land-2.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Agricultural Zoning", "River Frontage", "Good Soil"],
-    landDetails: {
-      plotSize: "5 Acres",
-      zoning: "Agricultural",
-      topography: "Gentle Slope",
-      accessRoad: true,
-      utilities: ["Water from River"],
-    },
-  },
-  {
-    id: 14,
-    title: "Beach Plot in Diani",
-    price: "₦500,000",
-    location: "Diani, Mombasa",
-    sqft: 15000,
-    image: "/images/properties/land-1.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Beach Front", "Tourist Area", "Title Deed"],
-    landDetails: {
-      plotSize: "0.34 Acres",
-      zoning: "Tourism/Residential",
-      topography: "Flat",
-      accessRoad: true,
-      utilities: ["Water", "Electricity"],
-    },
-  },
-  {
-    id: 15,
-    title: "10-Acre Ranch in Laikipia",
-    price: "₦120,000",
-    location: "Laikipia County",
-    sqft: 435600,
-    image: "/images/properties/land-2.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Wildlife Views", "Fencing", "Borehole"],
-    landDetails: {
-      plotSize: "10 Acres",
-      zoning: "Agricultural/Ranch",
-      topography: "Rolling Hills",
-      accessRoad: true,
-      utilities: ["Borehole Water"],
-    },
-  },
-];
+import { supabase } from '../../lib/supabase';
 
 export default function Properties() {
+  const [allProperties, setAllProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     type: "",
     category: "",
@@ -276,21 +17,58 @@ export default function Properties() {
     maxPrice: "",
     bedrooms: "",
     status: "",
-    section: "all", // New filter for sections
+    section: "all",
   });
 
   const [activeSection, setActiveSection] = useState<
     "all" | "properties" | "land"
   >("all");
 
-  // Separate properties into categories
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  const fetchProperties = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      if (data) {
+        const transformedProperties: Property[] = data.map((p: any) => ({
+          id: p.id,
+          title: p.title,
+          price: p.price,
+          location: p.location,
+          bedrooms: p.bedrooms,
+          bathrooms: p.bathrooms,
+          sqft: p.sqft,
+          image: p.image,
+          type: p.type,
+          category: p.category,
+          status: p.status,
+          features: p.features || [],
+          landDetails: p.land_details || undefined,
+        }));
+
+        setAllProperties(transformedProperties);
+      }
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const properties = allProperties.filter((p) => p.category !== "land");
   const lands = allProperties.filter((p) => p.category === "land");
 
   const filteredProperties = useMemo(() => {
     let items = allProperties;
 
-    // Section filter
     if (activeSection === "properties") {
       items = properties;
     } else if (activeSection === "land") {
@@ -298,14 +76,11 @@ export default function Properties() {
     }
 
     return items.filter((property) => {
-      // Type filter
       if (filters.type && property.type !== filters.type) return false;
 
-      // Category filter
       if (filters.category && property.category !== filters.category)
         return false;
 
-      // Bedrooms filter (only for residential properties)
       if (
         filters.bedrooms &&
         property.bedrooms &&
@@ -313,10 +88,8 @@ export default function Properties() {
       )
         return false;
 
-      // Status filter
       if (filters.status && property.status !== filters.status) return false;
 
-      // Price filter
       const priceNumber = parseInt(property.price.replace(/[₦,/month]/g, ""));
       if (filters.minPrice && priceNumber < parseInt(filters.minPrice))
         return false;
@@ -325,7 +98,7 @@ export default function Properties() {
 
       return true;
     });
-  }, [filters, activeSection]);
+  }, [filters, activeSection, allProperties, properties, lands]);
 
   const filteredPropertiesOnly = filteredProperties.filter(
     (p) => p.category !== "land"
@@ -334,7 +107,6 @@ export default function Properties() {
     (p) => p.category === "land"
   );
 
-  // Stats for counters
   const totalProperties = properties.length;
   const totalLands = lands.length;
   const availableProperties = properties.filter(
@@ -342,11 +114,22 @@ export default function Properties() {
   ).length;
   const availableLands = lands.filter((p) => p.status === "available").length;
 
+  if (loading) {
+    return (
+      <main>
+        <Header />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', color: '#7f8c8d' }}>
+          <p>Loading properties...</p>
+        </div>
+        <Footer />
+      </main>
+    );
+  }
+
   return (
     <main>
       <Header />
 
-      {/* Hero Section */}
       <section className="page-hero">
         <div className="container">
           <h1>Properties & Land Listings</h1>
@@ -388,26 +171,25 @@ export default function Properties() {
         </div>
       </section>
 
-      {/* Section Navigation */}
       <section className="section-nav">
         <div className="container">
           <div className="section-tabs">
             <button
-              className={`section-tab ₦{activeSection === 'all' ? 'active' : ''}`}
+              className={`section-tab ${activeSection === 'all' ? 'active' : ''}`}
               onClick={() => setActiveSection("all")}
             >
               All Listings
               <span className="tab-count">{allProperties.length}</span>
             </button>
             <button
-              className={`section-tab ₦{activeSection === 'properties' ? 'active' : ''}`}
+              className={`section-tab ${activeSection === 'properties' ? 'active' : ''}`}
               onClick={() => setActiveSection("properties")}
             >
               Properties
               <span className="tab-count">{properties.length}</span>
             </button>
             <button
-              className={`section-tab ₦{activeSection === 'land' ? 'active' : ''}`}
+              className={`section-tab ${activeSection === 'land' ? 'active' : ''}`}
               onClick={() => setActiveSection("land")}
             >
               Land for Sale
@@ -417,20 +199,16 @@ export default function Properties() {
         </div>
       </section>
 
-      {/* Filter Bar */}
       <section className="filters-section">
         <div className="container">
           <FilterBar onFilterChange={setFilters} />
         </div>
       </section>
 
-      {/* Properties Listing */}
       <section className="properties-listing">
         <div className="container">
-          {/* Show All Sections */}
           {activeSection === "all" && (
             <>
-              {/* Properties Section */}
               <div className="listing-section">
                 <div className="section-header">
                   <h2>Properties for Sale & Rent</h2>
@@ -451,7 +229,6 @@ export default function Properties() {
                 )}
               </div>
 
-              {/* Land Section */}
               <div className="listing-section">
                 <div className="section-header">
                   <h2>Land for Sale</h2>
@@ -474,7 +251,6 @@ export default function Properties() {
             </>
           )}
 
-          {/* Show Only Properties */}
           {activeSection === "properties" && (
             <div className="listing-section">
               <div className="section-header">
@@ -497,7 +273,6 @@ export default function Properties() {
             </div>
           )}
 
-          {/* Show Only Land */}
           {activeSection === "land" && (
             <div className="listing-section">
               <div className="section-header">
@@ -520,7 +295,6 @@ export default function Properties() {
             </div>
           )}
 
-          {/* No Results for All */}
           {filteredProperties.length === 0 && activeSection === "all" && (
             <div className="no-properties">
               <h3>No listings match your current filters</h3>

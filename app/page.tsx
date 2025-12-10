@@ -1,78 +1,56 @@
+"use client";
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PropertyCard from "./components/PropertyCard";
 import { Property } from "../types";
-
-const featuredProperties: Property[] = [
-  {
-    id: 1,
-    title: "Luxury Villa in Abuja",
-    price: "₦1,200,000",
-    location: "Abuja, Kano",
-    bedrooms: 4,
-    bathrooms: 3,
-    sqft: 3200,
-    image: "/images/properties/villa-1.jpg",
-    type: "sale",
-    category: "residential",
-    status: "available",
-    features: ["Swimming Pool", "Garden", "Security", "Parking"],
-  },
-  {
-    id: 2,
-    title: "Prime 1-Acre Plot in Kano",
-    price: "₦150,000",
-    location: "Kano, Kajiado",
-    sqft: 43560,
-    image: "/images/properties/land-1.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Title Deed", "Fenced", "Access Road", "Water Available"],
-    landDetails: {
-      plotSize: "1 Acre",
-      zoning: "Residential",
-      topography: "Flat",
-      accessRoad: true,
-      utilities: ["Water", "Electricity Nearby"],
-    },
-  },
-  {
-    id: 3,
-    title: "Modern Apartment in Lagos",
-    price: "₦450,000",
-    location: "Lagos, Kano",
-    bedrooms: 3,
-    bathrooms: 2,
-    sqft: 1800,
-    image: "/images/properties/house-3.jpg",
-    type: "sale",
-    category: "residential",
-    status: "available",
-    features: ["Balcony", "Gym", "Security", "Parking"],
-  },
-  {
-    id: 4,
-    title: "Commercial Plot in Kano",
-    price: "₦300,000",
-    location: "Kano, Kiambu",
-    sqft: 10000,
-    image: "/images/properties/land-2.jpg",
-    type: "sale",
-    category: "land",
-    status: "available",
-    features: ["Commercial Zoning", "Highway Frontage", "Title Deed"],
-    landDetails: {
-      plotSize: "0.23 Acres",
-      zoning: "Commercial",
-      topography: "Flat",
-      accessRoad: true,
-      utilities: ["Water", "Electricity", "Sewer"],
-    },
-  },
-];
+import { supabase } from '../lib/supabase';
 
 export default function Home() {
+  const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchFeaturedProperties();
+  }, []);
+
+  const fetchFeaturedProperties = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('properties')
+        .select('*')
+        .eq('status', 'available')
+        .order('created_at', { ascending: false })
+        .limit(4);
+
+      if (error) throw error;
+
+      if (data) {
+        const transformedProperties: Property[] = data.map((p: any) => ({
+          id: p.id,
+          title: p.title,
+          price: p.price,
+          location: p.location,
+          bedrooms: p.bedrooms,
+          bathrooms: p.bathrooms,
+          sqft: p.sqft,
+          image: p.image,
+          type: p.type,
+          category: p.category,
+          status: p.status,
+          features: p.features || [],
+          landDetails: p.land_details || undefined,
+        }));
+
+        setFeaturedProperties(transformedProperties);
+      }
+    } catch (error) {
+      console.error('Error fetching properties:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <main>
       <Header />
@@ -97,8 +75,8 @@ export default function Home() {
             development, and land investments
           </p>
           <div className="hero-buttons">
-            <button className="cta-button">View Properties</button>
-            <button className="cta-button secondary">Find Land</button>
+            <Link href="/properties" className="cta-button">View Properties</Link>
+            <Link href="/properties" className="cta-button secondary">Find Land</Link>
           </div>
         </div>
       </section>
@@ -154,16 +132,28 @@ export default function Home() {
       <section className="properties-section">
         <div className="container">
           <h2>Featured Properties & Land</h2>
-          <div className="properties-grid">
-            {featuredProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
-            ))}
-          </div>
-          <div className="view-all-container">
-            <a href="/properties" className="view-all-btn">
-              View All Properties
-            </a>
-          </div>
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '3rem', color: '#7f8c8d' }}>
+              <p>Loading properties...</p>
+            </div>
+          ) : featuredProperties.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '3rem', color: '#7f8c8d' }}>
+              <p>No properties available at the moment.</p>
+            </div>
+          ) : (
+            <>
+              <div className="properties-grid">
+                {featuredProperties.map((property) => (
+                  <PropertyCard key={property.id} property={property} />
+                ))}
+              </div>
+              <div className="view-all-container">
+                <Link href="/properties" className="view-all-btn">
+                  View All Properties
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
